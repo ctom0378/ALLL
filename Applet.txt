@@ -1,0 +1,872 @@
+1 .  WAP FOR APPLET TO DISPLAY BANNER :
+PROGRAM:
+
+
+import java.applet.*;
+import java.awt.*;
+public class Banner extends Applet implements Runnable
+{
+String text = " Simple Banner in java";
+Thread t;
+public void init()
+{
+setBackground(Color.white);
+}
+public void start()
+{
+t = new Thread(this);
+t.start();
+}
+public void run()
+{
+while(true)
+{
+try
+{
+repaint();
+//Delay each thread by 1000ms or 1 seconds
+Thread.sleep(1000);
+//Shift the first character of banner text to the last postion
+text = text.substring(1) + text.charAt(0);
+}
+catch(Exception e)
+{
+}
+}
+}
+public void paint(Graphics g)
+{
+g.setFont(new Font("TimesRoman",Font.BOLD,15));
+g.drawString(text,200,200);
+}
+}
+/*
+<applet code = Banner.class width=500 height=500>
+</applet>
+*/
+
+
+
+
+
+
+
+
+2. APPLET DISPLAY NIGHT VIEW :
+PROGRAM:
+import java.awt.*;
+import java.applet.*;
+public class Main extends Applet {
+public void init() {
+this.setBackground(Color.BLACK);
+}
+public void paint(Graphics g) {
+{
+int i = 0;
+while (i < 1000) {
+int appletWidth = getSize().width;
+int appletHeight = getSize().height;
+int x = (int) (Math.random() * appletWidth);
+int y = (int) (Math.random() * appletHeight);
+g.setColor(Color.WHITE);
+g.fillOval(x, y, 1, 1);
+i++;
+}
+}
+{
+int appletWidth = getSize().width;
+int appletHeight = getSize().height;
+int x = (int) (0.75 * appletWidth - 30);
+int y = (int) (0.75 * appletHeight - 50);
+g.setColor(Color.WHITE);
+g.fillOval(x, y, 30, 30);
+g.setColor(Color.BLACK);
+g.fillOval(x + 7, y + 3, 30, 30);
+}
+{
+int column = 0;
+int appletWidth = getSize().width;
+int horizonHeight = 50;
+int appletHeight = getSize().height;
+while (column < appletWidth) {
+g.setColor(new Color(.53f, .76f, .34f));
+g.drawRect(column, (appletHeight - horizonHeight), 1, appletHeight);
+column++;
+horizonHeight = horizonHeight + (int) (Math.random() * 3 - 1.5);
+}
+}
+}
+}
+
+
+
+
+
+
+
+
+ 3. CREATE THE INDIAN NATIONAL FLAG :
+PROGRAM:
+import java.awt.*;
+import java.applet.*;
+public class India_Flag extends Applet
+{
+public void paint(Graphics g)
+{
+g.setColor(Color.blue);
+g.fillRect(50,20,5,300);
+g.setColor(Color.black);
+g.drawRect(50,18,3,300);
+g.setColor(Color.orange);
+g.fillRect(55,20,120,30);
+g.setColor(Color.black);
+g.drawRect(55,20,118,28);
+g.setColor(Color.green);
+g.fillRect(55,80,119,30);
+g.setColor(Color.black);
+g.drawRect(55,80,117,28);
+g.setColor(Color.black);
+g.drawOval(100,50,30,30);
+}
+}
+
+
+
+4. CREATE ASHAK CHAKRA :
+PROGRAM:
+import java.applet.*;
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Ellipse2D;
+public class AshokChakra extends Applet {
+public void drawLine(Graphics graphics, int x1, int y1, int x2, int y2) {
+Graphics2D g2 = (Graphics2D) graphics;
+g2.setColor(Color.blue);
+g2.setStroke(new BasicStroke(5));
+g2.draw(new Line2D.Float(x1, y1, x2, y2));
+}
+public void drawCircle(Graphics graphics, int x1, int y1, int x2, int y2) {
+Graphics2D g2 = (Graphics2D) graphics;
+g2.setColor(Color.blue);
+g2.setStroke(new BasicStroke(5));
+g2.draw(new Ellipse2D.Float(x1, y1, x2, y2));
+}
+public void paint(Graphics graphics) {
+graphics.setColor(Color.blue);
+drawCircle(graphics, 100, 80, 400, 400);
+int n1 = 300;
+int d1 = 280;
+int r = 200;
+double n2, d2, angle, line = 0.0;
+for (int i = 1; i <= 24; i++) {
+angle = line * (3.14 / 180);
+n2 = n1 + (double) r * Math.cos(angle);
+d2 = d1 + (double) r * Math.sin(angle);
+drawLine(graphics, n1, d1, (int) n2, (int) d2);
+line += 360 / (double) 24;
+}
+}
+}
+/*
+* <applet code="AshokChakra.class" width="600"
+* height="600"></applet>
+
+
+
+
+5. CREATE SANDCLOCK :
+PROGRAM:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Area;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Rectangle2D;
+class Canvas extends JPanel implements ActionListener {
+private int off, elapsed;
+private final int tick;
+private final int h = 150;
+Timer t;
+public Canvas(int hh, int mm) {
+super();
+tick = ((hh * 3600 + mm * 60) * 1000) / h;
+t = new Timer(tick, this);
+t.start();
+}
+@Override
+public void paintComponent(Graphics g) {
+int x = 100, y = 30, w = 200;
+Graphics2D g2 = (Graphics2D) g;
+g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+RenderingHints.VALUE_ANTIALIAS_ON);
+g2.clearRect(x, y, w, h * 2 + 20);
+g2.setColor(Color.blue);
+GeneralPath polygon = new GeneralPath(GeneralPath.WIND_NON_ZERO, 4);
+polygon.moveTo(x, y);
+polygon.quadTo(x, h + 30, w / 2 + x, h + y);
+polygon.quadTo(x, h + y, x, h * 2 + y);
+polygon.lineTo(w + x, h * 2 + y);
+polygon.quadTo(w + x, h + y, w / 2 + x, h + y);
+polygon.quadTo(w + x, h + y, w + x, y);
+polygon.closePath();
+Rectangle2D mask = new Rectangle2D.Double(x, y + off, w, h - off);
+Rectangle2D mask2 = new Rectangle2D.Double(x, y + 2 * h - off, w, off);
+Area a1 = new Area(mask);
+Area a2 = new Area(polygon);
+a2.intersect(a1);
+g2.fill(a2);
+a1 = new Area(mask2);
+a2 = new Area(polygon);
+a2.intersect(a1);
+g2.fill(a2);
+g2.setStroke(new BasicStroke(1));
+g2.setColor(new Color(0xDDDDDD));
+g2.draw(polygon);
+}
+@Override
+public void actionPerformed(ActionEvent arg0) {
+off = off + 1;
+elapsed = elapsed + tick;
+repaint();
+if (off == h) {
+t.stop();
+}
+}
+}
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import java.awt.*;
+import java.applet.*;
+public class Main extends JFrame {
+public static void main(String[] args) {
+new Main();
+}
+public Main() {
+EventQueue.invokeLater(() -> {
+Canvas c = new Canvas(0, 3);
+setContentPane(c);
+pack();
+setSize(400, 400);
+setBackground(Color.BLACK);
+setLocationRelativeTo(null);
+setVisible(true);
+});
+}
+}
+
+
+
+
+
+
+
+6. CREATE MULTIPLE BOUNCEBALL:
+PROGRAM:
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+public class BOUNCINGBALLS extends Applet implements MouseListener, Runnable
+{
+Thread t=null;
+int x1=10, x2=10, x3=10, x4=10;
+int y1=300, y2=300, y3=300, y4=300;
+int flagx1,flagy1,flagx2,flagy2;
+int flagx3,flagy3,flagx4,flagy4;
+public void init()
+{
+addMouseListener(this);
+}
+public void mouseExited(MouseEvent me) {}
+public void mouseReleased(MouseEvent me) {}
+public void mouseEntered(MouseEvent me) {}
+public void mousePressed(MouseEvent me) {}
+public void mouseClicked(MouseEvent me) {}
+public void start()
+{
+t=new Thread(this);
+t.start();
+}
+public void run()
+{
+for(;;)
+{
+try
+{
+repaint();
+if(y1<=50)
+flagx1=0;
+else if(y1>=300)
+flagx1=1;
+if(x1<=10)
+flagy1=0;
+else if(x1>=400)
+flagy1=1;
+if(y2<=50)
+flagx2=0;
+else if(y2>=300)
+flagx2=1;
+if(x2<=10)
+flagy2=0;
+else if(x2>=400)
+flagy2=1;
+if(y3<=50)
+flagx3=0;
+else if(y3>=300)
+flagx3=1;
+if(x3<=10)
+flagy3=0;
+else if(x3>=400)
+flagy3=1;
+if(y4<=50)
+flagx4=0;
+else if(y4>=300)
+flagx4=1;
+if(x4<=10)
+flagy4=0;
+else if(x4>=400)
+flagy4=1;
+Thread.sleep(10);
+}catch(InterruptedException e){}
+}
+}
+public void paint(Graphics g)
+{
+g.drawRect(10,50,410,270);
+g.setColor(Color.blue);
+g.fillOval(x1,y1,20,20);
+if(flagx1==1)
+y1-=2;
+else if(flagx1==0)
+y1+=2;
+if(flagy1==0)
+x1+=4;
+else if(flagy1==1)
+x1-=4;
+g.setColor(Color.red);
+g.fillOval(x2,y2,20,20);
+if(flagx2==1)
+y2-=4;
+else if(flagx2==0)
+y2+=4;
+if(flagy2==0)
+x2+=3;
+else if(flagy2==1)
+x2-=3;
+g.setColor(Color.yellow);
+g.fillOval(x3,y3,20,20);
+if(flagx3==1)
+y3-=6;
+else if(flagx3==0)
+y3+=6;
+if(flagy3==0)
+x3+=2;
+else if(flagy3==1)
+x3-=2;
+g.setColor(Color.magenta);
+g.fillOval(x4,y4,20,20);
+if(flagx4==1)
+y4-=5;
+else if(flagx4==0)
+y4+=5;
+if(flagy4==0)
+x4+=1;
+else if(flagy4==1)
+x4-=1;
+}
+}
+OUTPUT:
+
+
+
+
+
+
+
+
+
+ 7.CREATE DIGITALCLOCK :
+PROGRAM:
+import java.applet.*;
+import java.awt.*;
+import java.util.*;
+import java.text.*;
+public class DigitalClock extends Applet implements Runnable {
+Thread t = null;
+int hours=0, minutes=0, seconds=0;
+String timeString = "";
+public void init() {
+setBackground( Color.green);
+}
+public void start() {
+t = new Thread( this );
+t.start();
+}
+public void run() {
+try {
+while (true) {
+Calendar cal = Calendar.getInstance();
+hours = cal.get( Calendar.HOUR_OF_DAY );
+if ( hours > 12 ) hours -= 12;
+minutes = cal.get( Calendar.MINUTE );
+seconds = cal.get( Calendar.SECOND );
+SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+Date date = cal.getTime();
+timeString = formatter.format( date );
+repaint();
+t.sleep( 1000 );
+}
+}
+catch (Exception e) { }
+}
+public void paint( Graphics g ) {
+g.setColor( Color.blue );
+g.drawString( timeString, 50, 50 );
+}
+}
+
+
+
+
+
+
+
+
+
+8.  CREATE ANALOG CLOCK :
+PROGRAM:
+import java.applet.*;
+import java.awt.*;
+import java.util.*;
+import java.text.*;
+public class MyClock extends Applet implements Runnable {
+int width, height;
+Thread t = null;
+boolean threadSuspended;
+int hours=0, minutes=0, seconds=0;
+String timeString = "";
+public void init() {
+width = getSize().width;
+height = getSize().height;
+setBackground( Color.black );
+}
+public void start() {
+if ( t == null ) {
+t = new Thread( this );
+t.setPriority( Thread.MIN_PRIORITY );
+threadSuspended = false;
+t.start();
+}
+else {
+if ( threadSuspended ) {
+threadSuspended = false;
+synchronized( this ) {
+notify();
+}
+}
+}
+}
+public void stop() {
+threadSuspended = true;
+}
+public void run() {
+try {
+while (true) {
+Calendar cal = Calendar.getInstance();
+hours = cal.get( Calendar.HOUR_OF_DAY );
+if ( hours > 12 ) hours -= 12;
+minutes = cal.get( Calendar.MINUTE );
+seconds = cal.get( Calendar.SECOND );
+SimpleDateFormat formatter
+= new SimpleDateFormat( "hh:mm:ss", Locale.getDefault() );
+Date date = cal.getTime();
+timeString = formatter.format( date );
+if ( threadSuspended ) {
+synchronized( this ) {
+while ( threadSuspended ) {
+wait();
+}
+}
+}
+repaint();
+t.sleep( 1000 );
+}
+}
+catch (Exception e) { }
+}
+void drawHand( double angle, int radius, Graphics g ) {
+angle -= 0.5 * Math.PI;
+int x = (int)( radius*Math.cos(angle) );
+int y = (int)( radius*Math.sin(angle) );
+g.drawLine( width/2, height/2, width/2 + x, height/2 + y );
+}
+void drawWedge( double angle, int radius, Graphics g ) {
+angle -= 0.5 * Math.PI;
+int x = (int)( radius*Math.cos(angle) );
+int y = (int)( radius*Math.sin(angle) );
+angle += 2*Math.PI/3;
+int x2 = (int)( 5*Math.cos(angle) );
+int y2 = (int)( 5*Math.sin(angle) );
+angle += 2*Math.PI/3;
+int x3 = (int)( 5*Math.cos(angle) );
+int y3 = (int)( 5*Math.sin(angle) );
+g.drawLine( width/2+x2, height/2+y2, width/2 + x, height/2 + y );
+g.drawLine( width/2+x3, height/2+y3, width/2 + x, height/2 + y );
+g.drawLine( width/2+x2, height/2+y2, width/2 + x3, height/2 + y3 );
+}
+public void paint( Graphics g ) {
+g.setColor( Color.gray );
+drawWedge( 2*Math.PI * hours / 12, width/5, g );
+drawWedge( 2*Math.PI * minutes / 60, width/3, g );
+drawHand( 2*Math.PI * seconds / 60, width/2, g );
+g.setColor( Color.white );
+g.drawString( timeString, 10, height-10 );
+}
+}
+
+
+
+9.  CREATE A CONCENTRIC CIRCLE :
+PROGRAM:
+import java.applet.*;
+import java.awt.*;
+public class Concentric extends Applet
+{
+public void init()
+{
+setBackground(Color.blue);
+}
+public void paint(Graphics g)
+{
+g.setColor(Color.black);
+int rad=25;
+int dia=50;
+for(int i=0;i<5;i++)
+{
+g.drawOval(250-(i*rad),250-(i*rad),(i+1)*dia,(i+1)*dia);
+}
+}
+}
+/*
+<applet code = Concentric.class width=500 height=500>
+</applet>
+*/
+
+
+
+
+
+
+
+10. APPLET TEXT ALIGNMENT:
+PROGRAM:
+import java.util.*;
+import java.awt.Font;
+import javax.swing.*;
+public class main {
+public static void main(String args[]) {
+Scanner sc= new Scanner(System.in);
+System.out.println("Enter your choice");
+System.out.println("Press 1 for left aligned Text");
+System.out.println("Press 2 for center aligned Text");
+System.out.println("Press 3 for right aligned Text:");
+int a= sc.nextInt();
+JFrame frame = new JFrame("Label Demo");
+JLabel label1;
+label1 = new JLabel("Left aligned Text!", JLabel.LEFT);
+label1.setFont(new Font("Verdana", Font.PLAIN, 13));
+JLabel label2;
+label2 = new JLabel("Center aligned!", JLabel.CENTER);
+label2.setFont(new Font("Verdana", Font.PLAIN, 13));
+JLabel label3;
+label3 = new JLabel("Right aligned!", JLabel.RIGHT);
+label3.setFont(new Font("Verdana", Font.PLAIN, 13));
+frame.add(label3);
+if(a==1){
+frame.add(label1);
+}
+else if(a==2){
+frame.add(label2);
+}
+else if(a==3){
+frame.add(label3);
+}
+frame.setSize(500,300);
+frame.setVisible(true);
+}
+}
+
+
+
+
+
+
+11. DIFFERENT BUTTONS :
+PROGRAM:
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+public class Main extends Applet implements ActionListener {
+Button button1, button2;
+Label status;
+public void init() {
+setLayout(new GridLayout(3, 2, 1, 1));
+Panel p1 = new Panel();
+p1.setLayout(new GridLayout(2, 1));
+button1 = new Button("Button 1");
+button1.setBackground(Color.BLUE);
+button1.setForeground(Color.WHITE);
+button1.addActionListener(this);
+button2 = new Button("Button 2");
+button2.setBackground(Color.GREEN);
+button2.setForeground(Color.WHITE);
+button2.addActionListener(this);
+p1.add(button1);
+p1.add(button2);
+status = new Label("");
+p1.add(status);
+add(p1);
+}
+public void actionPerformed(ActionEvent e) {
+if (e.getSource() == button1) {
+status.setText("Button 1 was pressed");
+System.out.println("Button 1 was pressed");
+} else {
+status.setText("Button 2 was pressed");
+System.out.println("Button 2 was pressed");
+}
+}
+}
+// <applet code="Main.class" width="500" height="500"></applet>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+12. CHECKBOX USING APPLETS :
+PROGRAM:
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.Applet;
+public class CheckBoxChoice extends Applet implements ItemListener {
+Checkbox c1, c2, c3;
+Label l;
+public void init() {
+setLayout(new GridLayout(3, 2, 1, 1));
+Panel p1 = new Panel();
+Panel p2 = new Panel();
+p1.setLayout(new GridLayout(3, 1));
+p2.setLayout(new GridLayout(1, 2));
+c1 = new Checkbox("Checkbox 1");
+p1.add(c1);
+c1.addItemListener(this);
+c2 = new Checkbox("Checkbox 2");
+p1.add(c2);
+c2.addItemListener(this);
+c3 = new Checkbox("CheckBox 3");
+p1.add(c3);
+c3.addItemListener(this);
+l = new Label("");
+p2.add(l);
+add(p1);
+add(p2);
+}
+public void itemStateChanged(ItemEvent e) {
+c1.setForeground(Color.BLACK);
+c2.setForeground(Color.BLACK);
+c3.setForeground(Color.BLACK);
+String selected = "";
+if (c1.getState()) {
+selected += "1";
+c1.setForeground(Color.BLUE);
+}
+if (c2.getState()) {
+if (!selected.isEmpty())
+selected += ", ";
+selected += "2";
+c2.setForeground(Color.BLUE);
+}
+if (c3.getState()) {
+if (!selected.isEmpty())
+selected += ", ";
+selected += "3";
+c3.setForeground(Color.BLUE);
+}
+selected += " Checkbox selected";
+l.setText(selected);
+}
+}
+// <applet code="CheckBoxChoice.class" width="500"
+// height="500"></applet>
+OUTPUT:
+
+
+
+
+
+
+13. CHOICE LIST (CLICK A LIST TO GET THE DETAILS) :
+PROGRAM:
+import java.awt.*;
+import java.awt.event.*;
+public class Lists {
+private final Frame mainFrame;
+private final Label status;
+private final Panel controlPanel;
+public Lists() {
+mainFrame = new Frame("Lists");
+mainFrame.setSize(400, 400);
+mainFrame.setLayout(new GridLayout(3, 1));
+mainFrame.addWindowListener(new WindowAdapter() {
+public void windowClosing(WindowEvent windowEvent) {
+System.exit(0);
+}
+});
+status = new Label();
+status.setAlignment(Label.CENTER);
+status.setSize(350, 100);
+status.setText("My expertise");
+controlPanel = new Panel();
+controlPanel.setLayout(new FlowLayout());
+mainFrame.add(controlPanel);
+mainFrame.add(status);
+mainFrame.setVisible(true);
+}
+public static void main(String[] args) {
+Lists list = new Lists();
+list.showLists();
+}
+private void showLists() {
+final List languages = new List(5, true);
+languages.add("C");
+languages.add("C++");
+languages.add("Java");
+languages.add("Python");
+languages.add("Java Script");
+final List expertise = new List(3, false);
+expertise.add("Beginner");
+expertise.add("Intermediate");
+expertise.add("Expert");
+Button showButton = new Button("Submit");
+showButton.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+StringBuilder data = new StringBuilder("I am " +
+expertise.getItem(expertise.getSelectedIndex()) + " at ");
+for (String lang : languages.getSelectedItems()) {
+data.append(lang).append(" ");
+}
+status.setText(data.toString());
+}
+});
+controlPanel.add(languages);
+controlPanel.add(expertise);
+controlPanel.add(showButton);
+mainFrame.setVisible(true);
+}
+}
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+14. MENUBAR (DROPDOWN) :
+PROGRAM:
+import java.awt.*;
+class main
+{
+main(){
+Frame f= new Frame("Menu and MenuItem Example");
+MenuBar mb=new MenuBar();
+Menu menu=new Menu("Menu");
+Menu submenu=new Menu("Sub Menu");
+MenuItem i1=new MenuItem("choice number 1");
+MenuItem i2=new MenuItem("choice number 2");
+MenuItem i3=new MenuItem("choice number 3");
+MenuItem i4=new MenuItem("Inside sub menu 1");
+MenuItem i5=new MenuItem("Inside sub menu 2");
+menu.add(i1);
+menu.add(i2);
+menu.add(i3);
+submenu.add(i4);
+submenu.add(i5);
+menu.add(submenu);
+mb.add(menu);
+f.setMenuBar(mb);
+f.setSize(400,400);
+f.setLayout(null);
+f.setVisible(true);
+}
+public static void main(String args[])
+{
+new main();
+}
+}
+OUTPUT:
+39. IMPORT AN IMAGE :
+PROGRAM:
+import java.awt.*;
+import java.applet.*;
+public class main extends Applet {
+Image picture;
+public void init() {
+picture = getImage(getDocumentBase(),"sonoo.png");
+}
+public void paint(Graphics g) {
+g.drawImage(picture, 30,30, this);
+}
+}
+/*
+<applet code = main.class width=500 height=500>
+</applet>
+*/
+
+
+
+15. DIALOG BOX :
+PROGRAM:
+import java.awt.*;
+import java.awt.event.*;
+public class DialogExample {
+private static Dialog d;
+DialogExample() {
+Frame f= new Frame();
+d = new Dialog(f , "Dialog Example", true);
+d.setLayout( new FlowLayout() );
+Button b = new Button ("OK");
+b.addActionListener ( new ActionListener()
+{
+public void actionPerformed( ActionEvent e )
+{
+DialogExample.d.setVisible(false);
+}
+});
+d.add( new Label ("This is a simple dialog box."));
+d.add(b);
+d.setSize(300,300);
+d.setVisible(true);
+}
+public static void main(String args[])
+{
+new DialogExample();
+}
+}
+OUTPUT:
+
+
